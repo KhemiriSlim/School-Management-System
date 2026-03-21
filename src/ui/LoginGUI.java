@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import model.User;
+import service.AuthService;
 public class LoginGUI {
     private JFrame frame;
     private Color PRIMARY    = new Color(24, 95, 165);
@@ -18,8 +19,9 @@ public class LoginGUI {
     private Color TEACHER_FG = new Color(8, 80, 65);
     private Color STUDENT_BG = new Color(250, 238, 218);
     private Color STUDENT_FG = new Color(99, 56, 6);
-
+    private AuthService authService = new AuthService();
     public void show() {
+
         frame = new JFrame("School Management System");
         frame.setSize(400, 520);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,7 +120,39 @@ public class LoginGUI {
             styleRoleBtn(studentBtn, STUDENT_BG, STUDENT_FG, true);
             registerLink.setVisible(true); // ← show
         });
+        loginBtn.addActionListener(e -> {
+            String email    = emailField.getText().trim();
+            String password = new String(passField.getPassword()).trim();
+            String role     = adminBtn.isSelected() ? "admin" :
+                    teacherBtn.isSelected() ? "teacher" : "student";
 
+            // ← add validation
+            if (email.isEmpty() || email.equals("Email") || password.isEmpty()) {
+                JOptionPane.showMessageDialog(frame,
+                        "Please fill all fields!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            new Thread(() -> {
+                User user = authService.login(email, password, role);
+                SwingUtilities.invokeLater(() -> {
+                    if (user != null) {
+                        frame.dispose();
+                        JOptionPane.showMessageDialog(frame,
+                                "Welcome " + user.getName() + "!",
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(frame,
+                                "Wrong email or password!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                });
+            }).start();
+        });
         // click register link → go to RegisterGUI
         registerLink.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
