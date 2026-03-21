@@ -50,7 +50,7 @@ public class AuthService {
                 System.out.println("Login successful!");
                 switch (role) {
                     case "admin":   return new Admin(id, name, email, password);
-                    case "teacher": return new Teacher(id, name, email, password);
+                    case "teacher": return new Teacher(id, name, email, password,"","");
                     case "student": return new Student(id, name, email, password);
                 }
             }else{

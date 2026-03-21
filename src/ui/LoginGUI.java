@@ -1,5 +1,6 @@
 package ui;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -139,11 +140,14 @@ public class LoginGUI {
                 User user = authService.login(email, password, role);
                 SwingUtilities.invokeLater(() -> {
                     if (user != null) {
-                        frame.dispose();
                         JOptionPane.showMessageDialog(frame,
                                 "Welcome " + user.getName() + "!",
                                 "Success",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                        new AdminDashboard(user).show();
+
+
                     } else {
                         JOptionPane.showMessageDialog(frame,
                                 "Wrong email or password!",
