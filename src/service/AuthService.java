@@ -51,7 +51,7 @@ public class AuthService {
                 switch (role) {
                     case "admin":   return new Admin(id, name, email, password);
                     case "teacher": return new Teacher(id, name, email, password,"","");
-                    case "student": return new Student(id, name, email, password);
+                    case "student": return new Student(id, name, email, password,"","");
                 }
             }else{
                 System.out.println("Wrong email or password!");

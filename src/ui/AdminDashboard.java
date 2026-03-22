@@ -55,6 +55,10 @@ public class AdminDashboard {
             frame.dispose();
             new ManageTeachersGUI(user).show();
         });
+        studentsBtn.addActionListener(e->{
+            frame.dispose();
+            new ManageStudentsGUI(user).show();
+        });
         // assemble
         card.add(title);
         card.add(Box.createVerticalStrut(6));
