@@ -50,6 +50,10 @@ public class AdminDashboard {
         JButton teachersBtn = createPrimaryButton("Manage Teachers");
         JButton studentsBtn = createPrimaryButton("Manage Students");
         JButton gradesBtn   = createPrimaryButton("Manage Grades");
+        gradesBtn.addActionListener(e->{
+            frame.dispose();
+            new ManageGradesGUI(user).show();
+        });
         JButton logoutBtn   = createDangerButton("Logout");
         teachersBtn.addActionListener(e->{
             frame.dispose();
